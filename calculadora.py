@@ -12,7 +12,7 @@ def error(mensaje: str):
 
 
 def resultado(operacion, mensaje: str = "El resultado es", añadido: str = ""):
-    print(f"{mensaje}: {operacion:.3f}{añadido}")
+    print(f"{mensaje}: {operacion:.2f}{añadido}")
 
 
 # ----- solicitudes -----
@@ -33,42 +33,28 @@ def medida():
 
 
 # --- operadores Aritmetica ---
-def suma(*valor):
-    resultado: float = 0
-    for x in valor:
-        try:
-            num: float = float(x)
-            resultado += num
-        except (ValueError, TypeError):
-            print("[ERROR]: Todos deben ser valores númericos")
-            return None
-    return resultado
-
-
-def resta(base: int | float, *valor):
-    resultado: float = float(base)
+def suma(num1: int | float, num2: int | float):
     try:
-        numeros = [float(x) for x in valor]
-        for x in numeros[0:]:
-            resultado -= x
-        return resultado
-    except (ValueError, TypeError, IndexError):
-        print("[ERROR]: Entrada inválida o faltan argumentos")
+        return num1 + num2
+    except (ValueError, TypeError):
+        print("[ERROR]: Todos deben ser valores numéricos")
         return None
 
 
-def multi(*valor):
-    if not valor:
-        return 0  # evitamos que la operacion vacia regrese 1
-    resultado: float = 1
-    for x in valor:
-        try:
-            num: float = float(x)
-            resultado *= num
-        except ValueError:
-            print("[ERROR]: Todos deben ser valores númericos")
-            return None
-    return resultado
+def resta(num1: int | float, num2: int | float):
+    try:
+        return num1 - num2
+    except (ValueError, TypeError):
+        print("[ERROR]: Todos deben ser valores numéricos")
+        return None
+
+
+def multi(num1: int | float, num2: int | float):
+    try:
+        return num1 * num2
+    except (ValueError, TypeError):
+        print("[ERROR]: Todos deben ser valores numéricos")
+        return None
 
 
 def dividir(num1: int | float, num2: int | float, entero: bool = False):
@@ -226,45 +212,44 @@ while True:
             )
             opera: int = int(input(": "))
             match opera:
-                case 1:
-                    entrada = input(
-                        "Ingresa los números separados por coma o espacio: "
-                    )
-                    numeros = entrada.replace(",", " ").split()
-                    total = suma(*numeros)
-                    if total is not None:
-                        resultado(total)
+                case 1:  # suma
+                    num1, num2 = pedirnumero()
+                    resultado(suma(num1, num2))
                     cierre()
-                case 2:
-                    base: float = float(input("Ingresa el primer número"))
-                    entrada = input(
-                        "Ingresa los números que vas a restarle al primero (separados por coma o espacio): "
-                    )
-                    numeros = entrada.replace(",", " ").split()
-                    total = resta(base, numeros)
-                    if total is not None:
-                        resultado(total)
+                case 2:  # resta
+                    num1, num2 = pedirnumero()
+                    resultado(resta(num1, num2))
                     cierre()
-                case 3:
+                case 3:  # multiplicacion
                     num1, num2 = pedirnumero()
                     resultado(multi(num1, num2))
                     cierre()
-                case 4:
+
+                case 4:  # Division
                     num1, num2 = pedirnumero()
                     resultado(dividir(num1, num2))
                     cierre()
-                case 5:
+
+                case 5:  # Potencia
                     num1, num2 = pedirnumero()
                     resultado(potencia(num1, num2))
                     cierre()
-                case 6:
+
+                case 6:  # Raiz
                     num1, num2 = pedirnumero()
                     resultado(raiz(num1, num2))
                     cierre()
-                case 7:
-                    num_fact: int = int(input("Ingresar numero: "))
-                    resultado(factorial(num_fact))
+
+                case 7:  # Factorial
+                    try:
+                        num_fact = int(input("Ingresar numero: "))
+                        total = factorial(num_fact)
+                        if total is not None:
+                            resultado(total)
+                    except ValueError:
+                        error("Debe ser un número entero")
                     cierre()
+
                 case _:
                     error("Operación no valida")
                     cierre()
