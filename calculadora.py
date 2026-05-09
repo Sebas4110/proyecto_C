@@ -236,7 +236,7 @@ while True:
                         resultado(total)
                     cierre()
                 case 2:
-                    base: float = float("Ingresa el primer número")
+                    base: float = float(input("Ingresa el primer número"))
                     entrada = input(
                         "Ingresa los números que vas a restarle al primero (separados por coma o espacio): "
                     )
