@@ -179,6 +179,10 @@ while True:
                                     case _:
                                         print("operación no valida")
                                         cierre()
+                            case 2:
+                                print("escribe la figura que deseas calcular el área:")
+                                print("1)circulo 2)cuadrado 3)rectangulo 4)trapecio 5)triangulo")
+                                figura: int = int(input())
                 case _:
                     print("dimensión no valida")
                     cierre()
