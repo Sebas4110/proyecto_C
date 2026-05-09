@@ -32,29 +32,105 @@ def medida():
     return medi
 
 
-# --- operadores Álgebra ---
-def suma(a, b):
-    return a + b
+# --- operadores Aritmetica ---
+def suma(*valor):
+    resultado: float = 0
+    for x in valor:
+        try:
+            num: float = float(x)
+            resultado += num
+        except (ValueError, TypeError):
+            print("[ERROR]: Todos deben ser valores númericos")
+            return None
+    return resultado
 
 
-def resta(a, b):
-    return a - b
+def resta(base: int | float, *valor):
+    resultado: float = float(base)
+    try:
+        numeros = [float(x) for x in valor]
+        for x in numeros[0:]:
+            resultado -= x
+        return resultado
+    except (ValueError, TypeError, IndexError):
+        print("[ERROR]: Entrada inválida o faltan argumentos")
+        return None
 
 
-def multi(a, b):
-    return a * b
+def multi(*valor):
+    if not valor:
+        return 0  # evitamos que la operacion vacia regrese 1
+    resultado: float = 1
+    for x in valor:
+        try:
+            num: float = float(x)
+            resultado *= num
+        except ValueError:
+            print("[ERROR]: Todos deben ser valores númericos")
+            return None
+    return resultado
 
 
-def divi(a, b):
-    return a / b
+def dividir(num1: int | float, num2: int | float, entero: bool = False):
+    try:
+        num1, num2 = float(num1), float(num2)  # forzamos la comprobacion del TypeError
+        if entero:
+            return num1 // num2
+        return num1 / num2
+    except (ValueError, TypeError):
+        print("[ERROR]: Todos deben ser valores numéricos")
+    except ZeroDivisionError:
+        print("[ERROR]: El denominador debe ser diferente a cero (0)")
+    return None
 
 
-def potencia(a, b):
-    return a**b
+def potencia(base: int | float, indice: int | float = 2):
+    try:
+        return base**indice
+    except TypeError:
+        print("[ERROR]: Todos deben ser valores númericos")
+    except ZeroDivisionError:
+        print("[ERROR]: No es posible elevar cero aun exponente negativo")
+    except OverflowError:
+        print("[ERROR]: El proceso es demasiado grande para realizarlo")
+        return None
 
 
-def radicacion(a, b):
-    return a ** (1 / b)
+def raiz(base: int | float, indice: int | float = 2):
+    try:
+        base, indice = float(base), float(
+            indice
+        )  # forzamos la comprobacion del TypeError
+        if base < 0 and indice % 2 == 0:  # lanza el error y lo atrapamos abajo
+            raise ValueError(
+                "[ERROR]: El resultado es un número inmaginario, no es posible base negativa y indice par"
+            )
+        else:
+            return base ** (1 / indice)
+    except TypeError:
+        print("[ERROR]: Todos deben ser valores númericos")
+    except ZeroDivisionError:
+        print("[ERROR]: El indice de la raiz no puede ser cero")
+    except OverflowError:
+        print("[ERROR]: El proceso es demasiado grande para realizarlo")
+        return None
+
+
+def factorial(tope: int):
+    resultado: int = 1
+    try:
+        if tope < 0:
+            raise ValueError("[ERROR]: La base debe ser igual o mayor a cero")
+        tope = int(tope)
+        if tope == 0:
+            return resultado
+        for x in range(2, tope + 1):
+            resultado *= x
+        return resultado
+    except (ValueError, TypeError):
+        print("[ERROR]: Debe ser un número entero")
+    except OverflowError:
+        print("[ERROR]: El proceso es demasiado grande para realizarlo")
 
 
 # --- operadores Trigonometria ---
@@ -137,26 +213,37 @@ print("==========BIENVENIDO==========")
 while True:
     print("¿En que área desea trabajar?")
     print(
-        "1) Álgebra \n2) Trigonometria \n3) Geometria(no disponible) \n4) Logaritmos(no disponible)"
+        "1) Aritmetica \n2) Trigonometria \n3) Geometria(no disponible) \n4) Logaritmos(no disponible)"
     )
     print("-- Presione 0 para salir")
     tipo: int = int(input(": "))
     match tipo:
-        # --- Álgebra ---
+        # --- Aritmetica ---
         case 1:
             print("\n¿Qué operación desea hacer?")
             print(
-                "1) Suma \n2) Resta \n3) Multiplicación \n4) División \n5) Potencia \n6) Raíz"
+                "1) Suma \n2) Resta \n3) Multiplicación \n4) División \n5) Potencia \n6) Raíz \n7) Factorial"
             )
             opera: int = int(input(": "))
             match opera:
                 case 1:
-                    num1, num2 = pedirnumero()
-                    resultado(suma(num1, num2))
+                    entrada = input(
+                        "Ingresa los números separados por coma o espacio: "
+                    )
+                    numeros = entrada.replace(",", " ").split()
+                    total = suma(*numeros)
+                    if total is not None:
+                        resultado(total)
                     cierre()
                 case 2:
-                    num1, num2 = pedirnumero()
-                    resultado(resta(num1, num2))
+                    base: float = float("Ingresa el primer número")
+                    entrada = input(
+                        "Ingresa los números que vas a restarle al primero (separados por coma o espacio): "
+                    )
+                    numeros = entrada.replace(",", " ").split()
+                    total = resta(base, numeros)
+                    if total is not None:
+                        resultado(total)
                     cierre()
                 case 3:
                     num1, num2 = pedirnumero()
@@ -164,7 +251,7 @@ while True:
                     cierre()
                 case 4:
                     num1, num2 = pedirnumero()
-                    resultado(divi(num1, num2))
+                    resultado(dividir(num1, num2))
                     cierre()
                 case 5:
                     num1, num2 = pedirnumero()
@@ -172,11 +259,16 @@ while True:
                     cierre()
                 case 6:
                     num1, num2 = pedirnumero()
-                    resultado(radicacion(num1, num2))
+                    resultado(raiz(num1, num2))
+                    cierre()
+                case 7:
+                    num_fact: int = int(input("Ingresar numero: "))
+                    resultado(factorial(num_fact))
                     cierre()
                 case _:
                     error("Operación no valida")
                     cierre()
+
         # --- Trigonometria ---
         case 2:
             print("\n¿Qué operación desea hacer?")
@@ -198,6 +290,7 @@ while True:
                 case _:
                     error("Operación no valida")
                     cierre()
+
         # --- Geometria ---
         case 3:
             print("\nLa figura a calcular es 3D o 2D?")
@@ -254,7 +347,7 @@ while True:
 
 
 # falta:
-# 1) Colocar tries
+# 1) Colocar tries (trigonometria, geometria, logaritmos)
 # 2) hacer la geometria (volumen)
 # 3) hacer conversion de decimales a fraccion y viceversa
 # 4) suma, resta, multiplicacion y division de fracciones
