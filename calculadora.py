@@ -1,199 +1,262 @@
 import math
+
+
 # ===== FUNCIONES =====
 # ----- detalles -----
 def cierre():
-    print("------------------------------------")
-    return
+    print("------------------------------------\n")
+
+
+def error(mensaje: str):
+    print(f"[ERROR]: {mensaje}")
+
+
+def resultado(operacion, mensaje: str = "El resultado es", añadido: str = ""):
+    print(f"{mensaje}: {operacion:.3f}{añadido}")
+
+
 # ----- solicitudes -----
 def pedirnumero():
-    num1: float = float(input("dime el primer numero: "))
-    num2: float = float(input("dime el segundo numero: "))
-    return num1,num2
+    num1: float = float(input("Ingresar primer numero: "))
+    num2: float = float(input("Ingresar segundo numero: "))
+    return num1, num2
+
+
 def pedirangulo():
-    angulo: int = int(input("dime el angulo a calcular: "))
+    angulo: int = int(input("Ingresar ángulo a calcular (grados): "))
     return angulo
+
+
 def medida():
-    print("que medida quieres trabajar?")
-    medi: str = input(": ")
+    medi: str = input("¿Que medida quieres trabajar (m, km, cm, etc)?: ")
     return medi
+
+
 # --- operadores Álgebra ---
-def suma(a,b):
-    return a+b
-def resta(a,b):
-    return a-b
-def multi(a,b):
-    return a*b
-def divi(a,b):
-    return a/b 
-def potencia(a,b):
+def suma(a, b):
+    return a + b
+
+
+def resta(a, b):
+    return a - b
+
+
+def multi(a, b):
+    return a * b
+
+
+def divi(a, b):
+    return a / b
+
+
+def potencia(a, b):
     return a**b
-def radicacion(a,b):
-    return a ** (1/b)
+
+
+def radicacion(a, b):
+    return a ** (1 / b)
+
+
 # --- operadores Trigonometria ---
 def tan(angulo):
     rad = math.radians(angulo)
     tan = math.tan(rad)
     return tan
+
+
 def sin(angulo):
     rad = math.radians(angulo)
     sin = math.sin(rad)
     return sin
+
+
 def cos(angulo):
     rad = math.radians(angulo)
     cos = math.cos(rad)
     return cos
+
+
 # --- operadores geometria ---
 def acirculo(r):
-    return math.pi * r ** 2
+    return math.pi * r**2
+
+
 def acuadrado(l):
-    return l ** 2
-def arectangulo(b,a):
+    return l**2
+
+
+def arectangulo(b, a):
     return b * a
-def atrapecio(a,b,h):
-    return (a + b) * h /2
-def atriangulo(a,b):
-    return a * b /2
+
+
+def atrapecio(a, b, h):
+    return (a + b) * h / 2
+
+
+def atriangulo(a, b):
+    return a * b / 2
+
+
 # --- soluciones geometria ---
 def circulo1():
-    print("cual es el radio del circulo?")
+    print("¿Cual es el radio del circulo?")
     radio: float = float(input(": "))
-    print(f"el área seria {acirculo(radio):.2f} {medida()}")
-    return
+    return acirculo(radio)
+
+
 def cuadrado1():
-    print("cual es el lado del cuadrado?")
+    print("¿Cual es el lado del cuadrado?")
     lado: float = float(input(": "))
-    print(f"el área seria {acuadrado(lado)} {medida()}")
-    return
+    return acuadrado(lado)
+
+
 def rectangulo1():
     print("cual es la base y la altura del rectangulo?")
     base: float = float(input("base: "))
     altura: float = float(input("altura: "))
-    print(f"el área seria {arectangulo(base,altura)} {medida()}")
-    return
+    return arectangulo(base, altura)
+
+
 def trapecio1():
     print("Cual es la base mayor,menor y altura del trapecio?")
     baseM: float = float(input("Base mayor: "))
     basem: float = float(input("Base menor: "))
     altura: float = float(input("Altura:"))
-    print(f"el área seria {atrapecio(baseM, basem, altura)} {medida()}")
-    return
+    return atrapecio(baseM, basem, altura)
+
+
 def triangulo1():
     print("cual es la base y la altura del triangulo?")
     base: float = float(input("base: "))
     altura: float = float(input("altura: "))
-    print(f"el área seria {atriangulo(base,altura)} {medida()}")
-    return
+    return atriangulo(base, altura)
+
 
 # ====== LOBBY ======
 print("==========BIENVENIDO==========")
 while True:
-    print("¿Qué tipo de operación desea hacer?")
-    print("1)Álgebra 2)trigonometria 3)Geometria(no disponible) 4)logaritmos(no disponible)")
-    print("presione 0 para salir")
+    print("¿En que área desea trabajar?")
+    print(
+        "1) Álgebra \n2) Trigonometria \n3) Geometria(no disponible) \n4) Logaritmos(no disponible)"
+    )
+    print("-- Presione 0 para salir")
     tipo: int = int(input(": "))
     match tipo:
-# --- Álgebra ---
+        # --- Álgebra ---
         case 1:
-            print("1)suma, 2)resta, 3)multiplicación, 4)división, 5)potencia, 6)raiz")
-            print("que desea hacer?")
+            print("\n¿Qué operación desea hacer?")
+            print(
+                "1) Suma \n2) Resta \n3) Multiplicación \n4) División \n5) Potencia \n6) Raíz"
+            )
             opera: int = int(input(": "))
             match opera:
                 case 1:
                     num1, num2 = pedirnumero()
-                    print(f"el resultado es {suma(num1,num2)}")
+                    resultado(suma(num1, num2))
                     cierre()
                 case 2:
                     num1, num2 = pedirnumero()
-                    print(f"el resultado es {resta(num1,num2)}")
+                    resultado(resta(num1, num2))
                     cierre()
                 case 3:
                     num1, num2 = pedirnumero()
-                    print(f"el resultado es {multi(num1,num2)}")
+                    resultado(multi(num1, num2))
                     cierre()
                 case 4:
                     num1, num2 = pedirnumero()
-                    print(f"el resultado es {divi(num1,num2)}")
+                    resultado(divi(num1, num2))
                     cierre()
                 case 5:
                     num1, num2 = pedirnumero()
-                    print(f"el resultado es {potencia(num1,num2)}")
+                    resultado(potencia(num1, num2))
                     cierre()
                 case 6:
                     num1, num2 = pedirnumero()
-                    print(f"el resultado es {radicacion(num1,num2)}")
+                    resultado(radicacion(num1, num2))
                     cierre()
                 case _:
-                    print("operación no valida")
+                    error("Operación no valida")
                     cierre()
-# --- Trigonometria ---
+        # --- Trigonometria ---
         case 2:
-            print("1)Seno 2)Coseno 3)Tangente")
+            print("\n¿Qué operación desea hacer?")
+            print("1) Seno \n2) Coseno \n3) Tangente")
             opera: int = int(input(": "))
             match opera:
                 case 1:
                     angulo = pedirangulo()
-                    print(f"el seno de ese angulo seria {sin(angulo):.2f}")
+                    resultado(sin(angulo), "El seno del angulo es", "°")
                     cierre()
                 case 2:
                     angulo = pedirangulo()
-                    print(f"el coseno de ese angulo seria {cos(angulo):.2f}")
+                    resultado(cos(angulo), "El coseno del angulo es", "°")
                     cierre()
-                case 3: 
+                case 3:
                     angulo = pedirangulo()
-                    print(f"la tangente seria {tan(angulo):.2f}")
+                    resultado(tan(angulo), "La tangente del angulo es", "°")
                     cierre()
                 case _:
-                    print("operación no valida")
+                    error("Operación no valida")
                     cierre()
-# --- Geometria ---
+        # --- Geometria ---
         case 3:
-            print("la figura a calcular es 3D o 2D?")
+            print("\nLa figura a calcular es 3D o 2D?")
             print("(Escribir '2d' o '3d')")
             forma: str = input(": ")
-            forma = forma.upper()
-            match forma:
+            print("¿Qué operación desea hacer?")
+            match forma.upper():
                 case "2D":
-                        print("1)Área 2)Perimetro")
-                        opera: int =int(input(": "))
-                        match opera:
-                            case 1:
-                                print("escribe la figura que deseas calcular el área:")
-                                print("1)circulo 2)cuadrado 3)rectangulo 4)trapecio 5)triangulo")
-                                figura: int = int(input())
-                                match figura:
-                                    case 1:
-                                        circulo1()
-                                        cierre()
-                                    case 2:
-                                        cuadrado1()
-                                        cierre()
-                                    case 3:
-                                        rectangulo1()
-                                        cierre()
-                                    case 4:
-                                        trapecio1()
-                                        cierre()
-                                    case 5:
-                                        triangulo1()
-                                        cierre()
-                                    case _:
-                                        print("operación no valida")
-                                        cierre()
-                            case 2:
-                                print("escribe la figura que deseas calcular el área:")
-                                print("1)circulo 2)cuadrado 3)rectangulo 4)trapecio 5)triangulo")
-                                figura: int = int(input())
+                    print("1) Área \n2) Perimetro")
+                    opera: int = int(input(": "))
+                    match opera:
+                        # areas
+                        case 1:
+                            print("Escribe la figura que deseas calcular el área:")
+                            print(
+                                "1) Circulo \n2) Cuadrado \n3) Rectangulo \n4) Trapecio \n5) Triangulo"
+                            )
+                            figura: int = int(input(": "))
+                            match figura:
+                                case 1:
+                                    resultado(circulo1(), "El área es", medida())
+                                    cierre()
+                                case 2:
+                                    resultado(cuadrado1(), "El área es", medida())
+                                    cierre()
+                                case 3:
+                                    resultado(rectangulo1(), "El área es", medida())
+                                    cierre()
+                                case 4:
+                                    resultado(trapecio1(), "El área es", medida())
+                                    cierre()
+                                case 5:
+                                    resultado(triangulo1(), "El área es", medida())
+                                    cierre()
+                                case _:
+                                    error("Operación no valida")
+                                    cierre()
+                        # perimetros
+                        case 2:
+                            print("Escribe la figura que deseas calcular el perimetro:")
+                            print(
+                                "1) Circulo \n2) Cuadrado \n3) Rectangulo \n4) Trapecio \n5) Triangulo"
+                            )
+                            figura: int = int(input(": "))
                 case _:
-                    print("dimensión no valida")
+                    error("Dimensión inválida")
                     cierre()
         case 0:
             print("==========HASTA PRONTO==========")
             break
         case _:
-            print("Numero no existente, intentelo de nuevo")
+            error("Área inexistente")
             cierre()
-#falta: 
-# 1) hacer la geometria 3)volumen
-# 2) hacer conversion de decimales a fraccion y viceversa 
-# 3) suma, resta, multiplicacion y division de fracciones
-# 4) usar el "for" e "in" para la calculadora
+
+
+# falta:
+# 1) Colocar tries
+# 2) hacer la geometria (volumen)
+# 3) hacer conversion de decimales a fraccion y viceversa
+# 4) suma, resta, multiplicacion y division de fracciones
+# 5) usar el "for" e "in" para la calculador
+# 6) Colocar textos de colores
